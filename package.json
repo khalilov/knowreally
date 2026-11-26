@@ -1,6 +1,6 @@
 {
   "name": "knowreally",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Verification of declaratively described conditions",
   "keywords": [],
   "license": "ISC",
@@ -26,7 +26,8 @@
     "dist",
     "README.md",
     "SPEC.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "skills"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",
@@ -38,6 +39,9 @@
     "pack:check": "npm pack --dry-run"
   },
   "prepublishOnly": "npm run check",
+  "dependencies": {
+    "objwalk": "^1.11.0"
+  },
   "devDependencies": {
     "prettier": "^3.9.10",
     "tsup": "^9.0.0",
