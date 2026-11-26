@@ -90,7 +90,7 @@ Direct calls take values as-is. Predicates apply their own validation and conver
 
 In condition trees, `truthy`, `falsy`, `exists`, `missing`, `empty` and `notEmpty` require one operand. `cooldownReady` accepts two or three. All other built-in predicates require two. Custom leaf functions own their operand contracts.
 
-Numeric comparisons return false for symbol operands, values that convert to `NaN` and objects without primitive conversion hooks. String membership returns false for objects without such hooks. Successful native coercion still applies. Exceptions from property access, proxies and user-supplied conversion hooks propagate.
+Numeric comparisons return false for symbol operands, values that convert to `NaN` and objects that cannot be converted to a primitive. String membership returns false when an object cannot be converted to a string. Successful native coercion still applies. Exceptions from property access, proxies and user-supplied conversion hooks propagate.
 
 | Function                                         | Semantics                                                                                                                                                                                              |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

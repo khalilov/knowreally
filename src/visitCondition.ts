@@ -1,3 +1,4 @@
+import { each } from 'objwalk'
 import { logicalConditions } from './helpers/logicalConditions'
 
 export const visitCondition = (
@@ -12,7 +13,7 @@ export const visitCondition = (
         visit(node, path, 'invalid-logical')
       } else {
         visit(node, path, 'logical')
-        args.forEach((child, index) => walk(child, [...path, index + 1]))
+        each(args, (index, child) => walk(child, [...path, index + 1]), { shallow: true })
       }
     } else {
       visit(node, path, 'leaf')

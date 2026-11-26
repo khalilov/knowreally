@@ -2,6 +2,9 @@
 
 Register named guards and evaluate conditions against JavaScript objects. Use the same predicates directly when you already have the values.
 
+> 🤖 Coding agent? Load the [knowreally skill](https://github.com/khalilov/knowreally/blob/development/skills/knowreally/SKILL.md).
+> Need every edge case? Open the [full specification](https://github.com/khalilov/knowreally/blob/development/SPEC.md).
+
 ## Install
 
 ```sh

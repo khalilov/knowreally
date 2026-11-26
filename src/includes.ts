@@ -1,8 +1,17 @@
-import { canConvertToPrimitive } from './helpers/canConvertToPrimitive'
+import { toPrimitive } from './helpers/toPrimitive'
 
 export const includes = (collection: unknown, value: unknown): boolean => {
   if (typeof collection === 'string') {
-    return canConvertToPrimitive(value) && collection.includes(String(value))
+    const primitive = toPrimitive(value, 'string')
+
+    if (
+      (typeof primitive !== 'object' || primitive === null) &&
+      typeof primitive !== 'function' &&
+      (typeof primitive !== 'symbol' || primitive === value)
+    ) {
+      return collection.includes(String(primitive))
+    }
+    return false
   }
   if (Array.isArray(collection)) {
     return collection.includes(value)

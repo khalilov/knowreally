@@ -4,7 +4,7 @@ import { type Condition, type EvaluateOptions, type Guards } from '../types'
 
 export const evaluateTree = (
   expression: Condition | undefined,
-  { conditions: custom = {}, resolve = (value) => value, test }: EvaluateOptions = {},
+  { conditions = {}, resolve = (value) => value, test }: EvaluateOptions = {},
   guards?: Guards
 ): boolean => {
   const check = (node: unknown): boolean => {
@@ -19,8 +19,7 @@ export const evaluateTree = (
 
       if (Object.hasOwn(logicalConditions, operator)) {
         return logicalConditions[operator](args, check)
-      }
-      if (operator === 'guard' && guards !== undefined) {
+      } else if (operator === 'guard' && guards !== undefined) {
         const [name] = args
 
         if (args.length === 1 && typeof name === 'string') {
@@ -32,19 +31,21 @@ export const evaluateTree = (
         }
 
         throw new TypeError('guard requires exactly one string name')
-      }
-      const builtin = getBuiltinCondition(operator, args.length)
+      } else {
+        const builtin = getBuiltinCondition(operator, args.length)
 
-      if (test !== undefined) {
-        return test(operator, args)
-      }
-      const condition = builtin ?? (Object.hasOwn(custom, operator) ? custom[operator] : undefined)
+        if (test !== undefined) {
+          return test(operator, args)
+        } else {
+          const condition = builtin ?? (Object.hasOwn(conditions, operator) ? conditions[operator] : undefined)
 
-      if (condition !== undefined) {
-        return condition(...args.map((value, index) => resolve(value, operator, index)))
-      }
+          if (condition !== undefined) {
+            return condition(...args.map((value, index) => resolve(value, operator, index)))
+          }
 
-      throw new TypeError(`Unknown condition "${operator}"`)
+          throw new TypeError(`Unknown condition "${operator}"`)
+        }
+      }
     }
 
     throw new TypeError('Expected a boolean or a condition array')
